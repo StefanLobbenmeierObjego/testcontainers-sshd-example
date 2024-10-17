@@ -1,0 +1,14 @@
+services:
+  sshd:
+    image: testcontainers/sshd:1.2.0
+    environment:
+      PASSWORD: "SET_YOUR_PASSWORD_HERE"
+    ports:
+      - 10022:22
+
+  requester:
+    image: curlimages/curl
+    command: /bin/sh -c "while true; do curl http://sshd:8080; sleep 5; done"
+    depends_on:
+      - sshd
+
